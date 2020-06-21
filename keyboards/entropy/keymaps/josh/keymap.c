@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_P7,   KC_P8,   KC_P9,  KC_TAB,        KC_Q,    KC_W,    KC_F,    KC_P,   KC_G,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_LBRC, KC_RBRC,  KC_BSLS,    KC_PGDN,  \
     KC_PPLS,   KC_P4,   KC_P5,   KC_P6,  KC_BSPC,         KC_A,    KC_R,   KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,   KC_QUOT,         KC_NUHS,     KC_END,  \
                KC_P1,   KC_P2,   KC_P3,  KC_LSFT,           KC_Z,    KC_X,  KC_C,    KC_V,    KC_B,    KC_K,    KC_M,  KC_COMM,   KC_DOT, KC_SLSH,       KC_RSFT,    KC_UP,    MO(_FN),  \
-    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          KC_SPC,     MO(_LOWER),     MO_SPC_RSE,          KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
+    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,     MO(_LOWER),     KC_SPC,          KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
     [_QWERTY] = LAYOUT_2U_SS(
@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_P7,   KC_P8,   KC_P9,  KC_TAB,        KC_Q,    KC_W,    KC_F,    KC_P,   KC_G,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_LBRC, KC_RBRC,  KC_BSLS,    KC_PGDN,  \
     KC_PPLS,   KC_P4,   KC_P5,   KC_P6,  KC_BSPC,         KC_A,    KC_R,   KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,   KC_QUOT,         KC_NUHS,     KC_END,  \
                KC_P1,   KC_P2,   KC_P3,  KC_LSFT,           KC_Z,    KC_X,  KC_C,    KC_V,    KC_B,    KC_K,    KC_M,  KC_COMM,   KC_DOT, KC_SLSH,       KC_RSFT,    KC_UP,    MO(_FN),  \
-    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          KC_SPC,       MO(_LOWER),     MO_SPC_RSE,        KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
+    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,       MO(_LOWER),     KC_SPC,        KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
     [_LOWER] = LAYOUT_2U_SS(
@@ -85,9 +85,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_FN] = LAYOUT_2U_SS(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, TG(_QWERTY),  \
-    _______, _______, _______, KC_NLCK, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,       TG(_MACRO),  \
-             _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,   _______,  \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, KC_NLCK, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,     TG(_QWERTY),  \
+             _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,   TG(_MACRO),  \
     _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
              _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,      _______,     _______, _______,  \
     _______, _______,          _______, _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
