@@ -66,6 +66,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Keyboard is setup to 'wrap' the pressed key with an unused Fxx key,
 // allowing for easy differentiation from a real keyboard.
+
+// When on layer _LOWER, seperate set of key presses are sent to enable multiple uses for one encoder
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (IS_LAYER_ON(_LOWER))
     {
