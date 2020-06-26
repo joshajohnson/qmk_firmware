@@ -25,8 +25,14 @@ enum keyboard_layers{
     _CTRL
 };
 
-#define ENC1 LT(_LOWER, KC_S)
-#define ENC2 LT(_LOWER, KC_V)
+#ifdef TAPPING_TERM
+#undef TAPPING_TERM
+#endif
+
+#define TAPPING_TERM 400
+
+#define ENC1 LT(_LOWER, KC_MUTE)
+#define ENC2 LT(_LOWER, KC_MPLY)
 
 // Tap Dance Declarations
 void td_ctrl (qk_tap_dance_state_t *state, void *user_data);
