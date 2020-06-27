@@ -31,8 +31,8 @@ enum keyboard_layers{
 
 #define TAPPING_TERM 400
 
-#define ENC1 LT(_LOWER, KC_MUTE)
-#define ENC2 LT(_LOWER, KC_MPLY)
+#define ENC1 LT(_LOWER, KC_F13)
+#define ENC2 LT(_LOWER, KC_F14)
 
 // Tap Dance Declarations
 void td_ctrl (qk_tap_dance_state_t *state, void *user_data);
@@ -80,21 +80,21 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         if (index == 0) { /* Left Encoder */
             if (clockwise) {
                 register_code(KC_WRAP);
-                tap_code(KC_W);
+                tap_code(KC_X);
                 unregister_code(KC_WRAP);
             } else {
                 register_code(KC_WRAP);
-                tap_code(KC_X);
+                tap_code(KC_W);
                 unregister_code(KC_WRAP);
             }
         } else if (index == 1) { /* Right Encoder */
             if (clockwise) {
                 register_code(KC_WRAP);
-                tap_code(KC_Y);
+                tap_code(KC_Z);
                 unregister_code(KC_WRAP);
             } else {
                 register_code(KC_WRAP);
-                tap_code(KC_Z);
+                tap_code(KC_Y);
                 unregister_code(KC_WRAP);
             }
         }
