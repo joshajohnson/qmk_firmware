@@ -16,25 +16,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include QMK_KEYBOARD_H
 
+#define KC_WRAP         KC_F23
+
 #define SINGLE_TAP_1 	KC_A
-#define SINGLE_HOLD_1 KC_B
+#define SINGLE_HOLD_1 	KC_B
 #define DOUBLE_TAP_1 	KC_C
 #define DOUBLE_HOLD_1	KC_D
 
 #define SINGLE_TAP_2 	KC_E
-#define SINGLE_HOLD_2 KC_F
+#define SINGLE_HOLD_2 	KC_F
 #define DOUBLE_TAP_2 	KC_G
-#define DOUBLE_HOLD_2 KC_H
+#define DOUBLE_HOLD_2 	KC_H
 
 #define SINGLE_TAP_3 	KC_I
-#define SINGLE_HOLD_3 KC_J
+#define SINGLE_HOLD_3 	KC_J
 #define DOUBLE_TAP_3 	KC_K
-#define DOUBLE_HOLD_3 KC_L
+#define DOUBLE_HOLD_3 	KC_L
 
 #define SINGLE_TAP_4 	KC_M
-#define SINGLE_HOLD_4 KC_N
+#define SINGLE_HOLD_4 	KC_N
 #define DOUBLE_TAP_4 	KC_O
-#define DOUBLE_HOLD_4 KC_P
+#define DOUBLE_HOLD_4 	KC_P
 
 #define ENC_CLOCKWISE	KC_Q
 #define ENC_ANTICLOCK	KC_R
@@ -83,30 +85,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (clockwise) {
+        register_code(KC_WRAP);
         tap_code(ENC_CLOCKWISE);
+        unregister_code(KC_WRAP);
     } else {
+        register_code(KC_WRAP);
         tap_code(ENC_ANTICLOCK);
+        unregister_code(KC_WRAP);
     }
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    // case GNU_CP:
-    //   if (record->event.pressed) {
-    //     // when keycode is pressed
-    //     SEND_STRING("I'd just like to interject for a moment. What you're referring to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.");
-    //     tap_code(KC_ENTER);
-    //     SEND_STRING("Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called 'Linux', and many of its users are not aware that it is basically the GNU system, developed by the GNU Project.");
-    //     tap_code(KC_ENTER);
-    //     SEND_STRING("There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called 'Linux' distributions are really distributions of GNU/Linux.");
-    //   } else {
-    //     // when keycode is released
-    //   }
-    // break;
-
-  }
-  return true;
-};
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//    // static uint8_t mod_tracker;
+//    //  switch (keycode) {
+//    //      case KC_A ... KC_F23:
+//    //      case KC_EXECUTE ... KC_EXSEL:
+//    //          if (record->event.pressed) {
+//    //              register_code(KC_WRAP);
+//    //              mod_tracker++;
+//    //              register_code(keycode);
+//    //          } else {
+//    //              unregister_code(keycode);
+//    //              mod_tracker--;
+//    //              if (!mod_tracker) {
+//    //                  unregister_code(KC_WRAP);
+//    //              }
+//    //          }
+//    //          return false;
+//    //          break;
+//    //  }
+//    //  return true;
+// };
 
 // Fancy Tap Dance stuff 
 // https://docs.qmk.fm/#/feature_tap_dance?id=tap-dance-a-single-key-can-do-3-5-or-100-different-things
@@ -144,6 +153,7 @@ static tap xtap_state = {
 
 void key1_finished (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
+  register_code(KC_WRAP);
   switch (xtap_state.state) {
     case SINGLE_TAP: register_code(SINGLE_TAP_1); break;
     case SINGLE_HOLD: register_code(SINGLE_HOLD_1); break;
@@ -162,9 +172,11 @@ void key1_reset (qk_tap_dance_state_t *state, void *user_data) {
     case DOUBLE_SINGLE_TAP: unregister_code(SINGLE_TAP_1);
   }
   xtap_state.state = 0;
+  unregister_code(KC_WRAP);
 }
 
 void key2_finished (qk_tap_dance_state_t *state, void *user_data) {
+  register_code(KC_WRAP);
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
     case SINGLE_TAP: register_code(SINGLE_TAP_2); break;
@@ -184,9 +196,11 @@ void key2_reset (qk_tap_dance_state_t *state, void *user_data) {
     case DOUBLE_SINGLE_TAP: unregister_code(SINGLE_TAP_2);
   }
   xtap_state.state = 0;
+  unregister_code(KC_WRAP);
 }
 
 void key3_finished (qk_tap_dance_state_t *state, void *user_data) {
+  register_code(KC_WRAP);
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
     case SINGLE_TAP: register_code(SINGLE_TAP_3); break;
@@ -206,9 +220,11 @@ void key3_reset (qk_tap_dance_state_t *state, void *user_data) {
     case DOUBLE_SINGLE_TAP: unregister_code(SINGLE_TAP_3);
   }
   xtap_state.state = 0;
+  unregister_code(KC_WRAP);
 }
 
 void key4_finished (qk_tap_dance_state_t *state, void *user_data) {
+  register_code(KC_WRAP);
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
     case SINGLE_TAP: register_code(SINGLE_TAP_4); break;
@@ -228,6 +244,7 @@ void key4_reset (qk_tap_dance_state_t *state, void *user_data) {
     case DOUBLE_SINGLE_TAP: unregister_code(SINGLE_TAP_4);
   }
   xtap_state.state = 0;
+  unregister_code(KC_WRAP);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {

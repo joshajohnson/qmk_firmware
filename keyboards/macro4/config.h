@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xfeed
-#define PRODUCT_ID      0x8f75
-#define DEVICE_VER      0x0001
+#define PRODUCT_ID      0x1337
+#define DEVICE_VER      0x0002
 
 #define MANUFACTURER Josh Johnson
 #define PRODUCT macro4
@@ -30,25 +30,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 2
 #define MATRIX_COLS 2
 
+/*
+// VER 0.1
 #define DIRECT_PINS { \
 	{A9, A14}, \
 	{A3, B7},  \
 }
+*/
 
-/* Set 0 if debouncing isn't needed */
+// VER 0.2
+#define DIRECT_PINS { \
+	{A8, A14}, \
+	{A3, B7},  \
+}
+
+/* Set 0 if debouncing isn't needed  */
 #define DEBOUNCE    5
 
 /* Rotary Encoders */
-#define ENCODERS_PAD_A { B5 }
-#define ENCODERS_PAD_B { B6 }
+#define ENCODERS_PAD_A { B1, B5 }
+#define ENCODERS_PAD_B { B2, B6 }
 
 /* RGB */
 #define RGBLED_NUM 3
 #define RGB_DI_PIN B15
 
 // #define RGBLIGHT_EFFECT_BREATHING
-// #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+#define RGBLIGHT_EFFECT_RAINBOW_MOOD
+// #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 // #define RGBLIGHT_EFFECT_SNAKE
 // #define RGBLIGHT_EFFECT_KNIGHT
 // #define RGBLIGHT_EFFECT_CHRISTMAS
@@ -57,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define RGBLIGHT_EFFECT_ALTERNATING
 
 /* Tap Dance */
-#define TAPPING_TERM 500
+#define TAPPING_TERM 200
 
 /* Not used but required for compilation */
 #define BACKLIGHT_LEVELS 6
