@@ -38,8 +38,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DOUBLE_TAP_4 	KC_O
 #define DOUBLE_HOLD_4 	KC_P
 
-#define ENC_CLOCKWISE	KC_Q
-#define ENC_ANTICLOCK	KC_R
+#define ENC1_CLOCKWISE	KC_Q
+#define ENC1_ANTICLOCK	KC_R
+#define ENC2_CLOCKWISE	KC_S
+#define ENC2_ANTICLOCK	KC_T
 
 // Quad Function Tap-Dance
 typedef struct {
@@ -61,7 +63,7 @@ enum {
 enum {
   KEY1 = 0,
   KEY2,
-  KEY3, 
+  KEY3,
   KEY4
 };
 
@@ -78,20 +80,32 @@ void key4_reset (qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT(
-    TD(KEY1), TD(KEY2), 
+    TD(KEY1), TD(KEY2),
     TD(KEY3), TD(KEY4)
   )
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (clockwise) {
-        register_code(KC_WRAP);
-        tap_code(ENC_CLOCKWISE);
-        unregister_code(KC_WRAP);
-    } else {
-        register_code(KC_WRAP);
-        tap_code(ENC_ANTICLOCK);
-        unregister_code(KC_WRAP);
+    if (index == 0) { /* Left Encoder */
+        if (clockwise) {
+            register_code(KC_WRAP);
+            tap_code(ENC1_CLOCKWISE);
+            unregister_code(KC_WRAP);
+        } else {
+            register_code(KC_WRAP);
+            tap_code(ENC1_ANTICLOCK);
+            unregister_code(KC_WRAP);
+        }
+    } else if (index == 1) { /* Right Encoder */
+        if (clockwise) {
+            register_code(KC_WRAP);
+            tap_code(ENC2_CLOCKWISE);
+            unregister_code(KC_WRAP);
+        } else {
+            register_code(KC_WRAP);
+            tap_code(ENC2_ANTICLOCK);
+            unregister_code(KC_WRAP);
+        }
     }
 }
 
@@ -117,7 +131,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 //    //  return true;
 // };
 
-// Fancy Tap Dance stuff 
+// Fancy Tap Dance stuff
 // https://docs.qmk.fm/#/feature_tap_dance?id=tap-dance-a-single-key-can-do-3-5-or-100-different-things
 int cur_dance (qk_tap_dance_state_t *state) {
   if (state->count == 1) {
@@ -249,7 +263,7 @@ void key4_reset (qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [KEY1]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,key1_finished, key1_reset),
-  [KEY2]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,key2_finished, key2_reset), 
+  [KEY2]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,key2_finished, key2_reset),
   [KEY3]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,key3_finished, key3_reset),
   [KEY4]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,key4_finished, key4_reset)
 };
