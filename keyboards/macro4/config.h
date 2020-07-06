@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xfeed
-#define PRODUCT_ID      0x1337
-#define DEVICE_VER      0x0002
+#define VENDOR_ID       0x6A6A
+#define PRODUCT_ID      0x6E04
+#define DEVICE_VER      0x0001
 
 #define MANUFACTURER Josh Johnson
 #define PRODUCT macro4
@@ -48,8 +48,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEBOUNCE    5
 
 /* Rotary Encoders */
-#define ENCODERS_PAD_A { B1, B5 }
-#define ENCODERS_PAD_B { B2, B6 }
+#define ENCODERS_PAD_A { B2, B6 }
+#define ENCODERS_PAD_B { B1, B5 }
 
 /* RGB */
 #define RGBLED_NUM 3
@@ -67,6 +67,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Tap Dance */
 #define TAPPING_TERM 200
+
+/* Slow down the key press speed */
+#define TAP_CODE_DELAY 20
 
 /* Not used but required for compilation */
 #define BACKLIGHT_LEVELS 6
