@@ -44,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Lighting things */
 #define RGBLIGHT_LAYERS
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 
 #define RGB_DI_PIN B15
 #ifdef RGB_DI_PIN

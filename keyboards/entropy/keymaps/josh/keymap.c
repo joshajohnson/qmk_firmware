@@ -94,6 +94,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 /*
+Per Key Actions
+
+*/
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case RESET:
+        if (record->event.pressed) {
+            rgblight_setrgb(255, 0, 0);
+        } else {
+        }
+        break;
+    }
+    return true;
+}
+
+/*
 Encoder control
 
 Default:
