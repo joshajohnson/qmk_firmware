@@ -93,26 +93,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-// Encoder control
+/*
+Encoder control
+
+Default:
+Enc 0 & 1: Disabled
+Enc 2: Volume up / down / mute
+Enc 3: Media next / prev / play-pause
+
+When on _FN
+Enc 0: Hue
+Enc 1: Saturation
+Enc 2: Brightness
+Enc 3: LED Mode / enable
+*/
+
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (IS_LAYER_ON(_FN)){
         if (index == 0) {
             if (clockwise) {
-                rgblight_increase_hue();
+                rgblight_increase_hue_noeeprom();
             } else {
-                rgblight_decrease_hue();
+                rgblight_decrease_hue_noeeprom();
             }
         } else if (index == 1) {
             if (clockwise) {
-                rgblight_increase_sat();
+                rgblight_increase_sat_noeeprom();
             } else {
-                rgblight_decrease_sat();
+                rgblight_decrease_sat_noeeprom();
             }
         } else if (index == 2) {
             if (clockwise) {
-                rgblight_increase_val();
+                rgblight_increase_val_noeeprom();
             } else {
-                rgblight_decrease_val();
+                rgblight_decrease_val_noeeprom();
             }
         } else if (index == 3) {
             if (clockwise) {
@@ -160,4 +174,88 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             // }
         }
     }
+}
+
+/*
+LED CONTROL
+
+LED 0 shows keyboard layout
+OFF:    COLEMAK
+RED:    NOT CONFIGURED
+GREEN:  QWERTY
+BLUE:   MACRO
+
+LED 1 shows temp layers
+OFF:    NO MOD
+RED:    FN
+GREEN:  RAISE
+BLUE:   LOWER
+
+LED 2 is currently not configured
+
+LED 3 shows caps / num / scroll lock
+OFF:    NUM LOCK (enabled by default)
+RED:    CAPS LOCK
+GREEN:  NUM LOCK DISABLED
+BLUE:   SCROLL LOCK
+*/
+
+void matrix_init_user(void) {
+    rgblight_set_effect_range(0, 16); // Only use the first 16 LEDs for underglow
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+
+    uint8_t colemak = 0;
+    uint8_t qwerty = 0;
+    uint8_t macro = 0;
+
+    if (IS_LAYER_ON(_COLEMAK)){
+        colemak = 0;
+    }
+    if (IS_LAYER_ON(_QWERTY)){
+        qwerty = 255;
+    }
+    if (IS_LAYER_ON(_MACRO)){
+        macro = 255;
+    }
+    // First LED
+    rgblight_setrgb_at(colemak, qwerty, macro, LED0);
+
+    // Second LED
+    switch (get_highest_layer(state)) {
+    case _LOWER:
+        rgblight_setrgb_at(0, 0, 255, LED1);
+        break;
+    case _RAISE:
+        rgblight_setrgb_at(0, 255, 0, LED1);
+        break;
+    case _FN:
+        rgblight_setrgb_at(255, 0, 0, LED1);
+        break;
+    default:
+        rgblight_setrgb_at(0, 0, 0, LED1);
+        break;
+    }
+
+  return state;
+};
+
+// Caps / Num / Scroll lock indicator
+bool led_update_kb(led_t led_state) {
+    // Force caps to on by default
+    static bool once = 1;
+    if (once && !led_state.num_lock ){
+        register_code(KC_NUMLOCK);
+        unregister_code(KC_NUMLOCK);
+        once = 0;
+    }
+
+    uint8_t caps = led_state.caps_lock ? 255 : 0;
+    uint8_t num = led_state.num_lock ? 0 : 255; // Inverted as Numlock should be on by default
+    uint8_t scroll = led_state.scroll_lock ? 255 : 0;
+    // Set Last LED
+    rgblight_setrgb_at(caps, num, scroll, LED3);
+
+    return true;
 }
