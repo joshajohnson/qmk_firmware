@@ -29,11 +29,9 @@ enum layer_names {
 
 #define MO_SPC_RSE LT(_RAISE, KC_SPACE)
 
-// // Defines the keycodes used by our macros in process_record_user
-// enum custom_keycodes {
-//     QMKBEST = SAFE_RANGE,
-//     QMKURL
-// };
+#define MT_RA_M1 RALT_T(KC_MS_BTN1)
+#define MT_RC_M2 RCTL_T(KC_MENU)  // Can't get the tap button working, maybe basic keycodes only?
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT_2U_SS(
@@ -42,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_P7,   KC_P8,   KC_P9,  KC_TAB,        KC_Q,    KC_W,    KC_F,    KC_P,   KC_G,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_LBRC, KC_RBRC,  KC_BSLS,    KC_PGDN,  \
     KC_PPLS,   KC_P4,   KC_P5,   KC_P6,  KC_BSPC,         KC_A,    KC_R,   KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,   KC_QUOT,          KC_ENT,     KC_END,  \
                KC_P1,   KC_P2,   KC_P3,  KC_LSFT,           KC_Z,    KC_X,  KC_C,    KC_V,    KC_B,    KC_K,    KC_M,  KC_COMM,   KC_DOT, KC_SLSH,       KC_RSFT,    KC_UP,    MO(_FN),  \
-    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,    KC_SPC,          MO(_LOWER),      KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
+    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,    KC_SPC,          MO(_LOWER),        MT_RA_M1,   MT_RC_M2,   KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
     [_QWERTY] = LAYOUT_2U_SS(
@@ -51,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_P7,   KC_P8,   KC_P9,  KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   KC_LBRC, KC_RBRC,  KC_BSLS,    KC_PGDN,  \
     KC_PPLS,   KC_P4,   KC_P5,   KC_P6,  KC_BSPC,         KC_A,    KC_S,   KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,   KC_QUOT,         KC_ENT,     KC_END,  \
                KC_P1,   KC_P2,   KC_P3,  KC_LSFT,           KC_Z,    KC_X,  KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,   KC_DOT, KC_SLSH,       KC_RSFT,    KC_UP,    MO(_FN),  \
-    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,    KC_SPC,          MO(_LOWER),      KC_RALT,       KC_RCTL,   KC_LEFT, KC_DOWN, KC_RIGHT
+    KC_PENT, KC_PDOT,      KC_P0,        KC_LCTL,  KC_LGUI,    KC_LALT,          MO_SPC_RSE,    KC_SPC,          MO(_LOWER),        MT_RA_M1,   MT_RC_M2,   KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
     [_LOWER] = LAYOUT_2U_SS(
@@ -85,9 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_FN] = LAYOUT_2U_SS(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
+    _______, _______, _______, RGB_TOG, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
     _______, _______, _______, KC_NLCK, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,     TG(_QWERTY),  \
-             _______, _______, _______, _______,     RGB_TOG, RGB_RMOD, RGB_MOD, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_MACRO),  \
+             _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_MACRO),  \
     _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
              _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,      _______,     _______, _______,  \
     _______, _______,          _______, _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
@@ -95,60 +93,71 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case QMKBEST:
-//             if (record->event.pressed) {
-//                 // when keycode QMKBEST is pressed
-//                 SEND_STRING("QMK is the best thing ever!");
-//             } else {
-//                 // when keycode QMKBEST is released
-//             }
-//             break;
-//         case QMKURL:
-//             if (record->event.pressed) {
-//                 // when keycode QMKURL is pressed
-//                 SEND_STRING("https://qmk.fm/\n");
-//             } else {
-//                 // when keycode QMKURL is released
-//             }
-//             break;
-//     }
-//     return true;
-// }
-
 // Encoder control
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (clockwise) {
-        //     tap_code(KC_1);
-        // } else {
-        //     tap_code(KC_A);
-        // }
-    } else if (index == 1) {
-        // if (clockwise) {
-        //     tap_code(KC_2);
-        // } else {
-        //     tap_code(KC_B);
-        // }
-    } else if (index == 2) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+    if (IS_LAYER_ON(_FN)){
+        if (index == 0) {
+            if (clockwise) {
+                rgblight_increase_hue();
+            } else {
+                rgblight_decrease_hue();
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                rgblight_increase_sat();
+            } else {
+                rgblight_decrease_sat();
+            }
+        } else if (index == 2) {
+            if (clockwise) {
+                rgblight_increase_val();
+            } else {
+                rgblight_decrease_val();
+            }
+        } else if (index == 3) {
+            if (clockwise) {
+                rgblight_step();
+            } else {
+                rgblight_step_reverse();
+            }
+        } else if (index == 4) {
+            // if (clockwise) {
+            //     tap_code(KC_MNXT);
+            // } else {
+            //     tap_code(KC_MPRV);
+            // }
         }
-    } else if (index == 3) {
-        if (clockwise) {
-            tap_code(KC_MNXT);
-        } else {
-            tap_code(KC_MPRV);
-        }
-    } else if (index == 4) {
-        // if (clockwise) {
-            // tap_code(KC_5);
-        // } else {
-            // tap_code(KC_E);
+    } else {
+            if (index == 0) {
+            // if (clockwise) {
+            //     tap_code(KC_MNXT);
+            // } else {
+            //     tap_code(KC_MPRV);
+            // }
+        } else if (index == 1) {
+            // if (clockwise) {
+            //     tap_code(KC_MNXT);
+            // } else {
+            //     tap_code(KC_MPRV);
+            // }
+        } else if (index == 2) {
+            if (clockwise) {
+                tap_code(KC_VOLU);
+            } else {
+                tap_code(KC_VOLD);
+            }
+        } else if (index == 3) {
+            if (clockwise) {
+                tap_code(KC_MNXT);
+            } else {
+                tap_code(KC_MPRV);
+            }
+        } else if (index == 4) {
+            // if (clockwise) {
+            //     tap_code(KC_MNXT);
+            // } else {
+            //     tap_code(KC_MPRV);
+            // }
         }
     }
-
 }
