@@ -16,6 +16,7 @@
 #include QMK_KEYBOARD_H
 
 #define ___ KC_NO
+#define KC_WRAP KC_F22
 
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
@@ -29,7 +30,6 @@ enum layer_names {
 };
 
 #define MO_SPC_LOW LT(_LOWER, KC_SPACE)
-
 #define MT_RA_M1 RALT_T(KC_MS_BTN1)
 #define MT_RC_APP RCTL_T(KC_APP)
 #define OSL_M OSL(_MACRO)
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,      _______,  \
              _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,   _______,  \
-    _______, _______,    KC_J, _______, _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
+    _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
              _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,      _______,     _______, _______,  \
     _______, _______,          _______, _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
 ),
@@ -108,13 +108,36 @@ Per Key Actions
 */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // static uint8_t f24_tracker;
+    static uint8_t macro_flag;
     switch (keycode) {
+
     case RESET:
         if (record->event.pressed) {
             rgblight_setrgb(255, 0, 0);
         } else {
         }
         break;
+    }
+
+    // Macro mode for numpad when on _MACRO layer
+    if (IS_LAYER_ON(_MACRO) || macro_flag){
+        switch (keycode){
+
+        case KC_PSLS ... KC_PDOT:
+            if (record->event.pressed) {
+                register_code(KC_WRAP);
+                macro_flag = 1;
+                return true;
+                break;
+            } else {
+                unregister_code(keycode);
+                unregister_code(KC_WRAP);
+                macro_flag = 0;
+                return false;
+                break;
+            }
+        }
     }
     return true;
 }

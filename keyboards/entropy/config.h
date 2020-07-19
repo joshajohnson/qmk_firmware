@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x03A8  // Ψ in Unicode
-#define PRODUCT_ID      0x5F93
+#define VENDOR_ID       0x6A6A  // JJ
+#define PRODUCT_ID      0x1010  // Entropy?
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    joshajohnson
 #define PRODUCT         entropy
