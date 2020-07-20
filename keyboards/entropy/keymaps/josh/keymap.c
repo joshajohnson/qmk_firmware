@@ -18,6 +18,9 @@
 #define ___ KC_NO
 #define KC_WRAP KC_F22
 
+/* LED control */
+uint8_t status_en = 1;
+
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
     _COLEMAK = 0,
@@ -27,6 +30,11 @@ enum layer_names {
     _RAISE,
     _MACRO,
     _FN
+};
+
+enum custom_codes{
+    STAT_EN = SAFE_RANGE,
+    UNDER_EN
 };
 
 #define MO_SPC_LOW LT(_LOWER, KC_SPACE)
@@ -92,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_FN] = LAYOUT_2U_SS(
-    _______, _______, _______, RGB_TOG,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
+    _______, _______, RGB_TOG, STAT_EN,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
     CK_DOWN, _______, _______, TG(_MACRO), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,     TG(_QWERTY),  \
              _______, _______, _______,    _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_NORMAL),  \
     CK_UP,   _______, _______, _______,    _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
@@ -115,6 +123,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RESET:
         if (record->event.pressed) {
             rgblight_setrgb(255, 0, 0);
+            rgblight_setrgb_range(0, 0, 0, LED0, LED3+1); // Disable Status LEDs
+        } else {
+        }
+        break;
+
+    case STAT_EN:
+        if (record->event.pressed) {
+            status_en ^=1;
+        } else {
+        }
+        break;
+
+    case RGB_TOG:
+        if (record->event.pressed) {
+            rgblight_setrgb_range(0, 0, 0, LED0, LED3+1); // Disable Status LEDs when disabling RGB
+            return true;
         } else {
         }
         break;
@@ -255,36 +279,43 @@ void matrix_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
 
-    uint8_t colemak = 0;
-    uint8_t qwerty = 0;
-    uint8_t macro = 0;
+    if (status_en) {
 
-    if (IS_LAYER_ON(_COLEMAK)){
-        colemak = 0;
-    }
-    if (IS_LAYER_ON(_QWERTY)){
-        qwerty = 255;
-    }
-    if (IS_LAYER_ON(_MACRO)){
-        macro = 255;
-    }
-    // First LED
-    rgblight_setrgb_at(colemak, qwerty, macro, LED0);
+        uint8_t colemak = 0;
+        uint8_t qwerty = 0;
+        uint8_t macro = 0;
 
-    // Second LED
-    switch (get_highest_layer(state)) {
-    case _LOWER:
-        rgblight_setrgb_at(0, 0, 255, LED1);
-        break;
-    case _RAISE:
-        rgblight_setrgb_at(0, 255, 0, LED1);
-        break;
-    case _FN:
-        rgblight_setrgb_at(255, 0, 0, LED1);
-        break;
-    default:
+        if (IS_LAYER_ON(_COLEMAK)){
+            colemak = 0;
+        }
+        if (IS_LAYER_ON(_QWERTY)){
+            qwerty = 255;
+        }
+        if (IS_LAYER_ON(_MACRO)){
+            macro = 255;
+        }
+        // First LED
+        rgblight_setrgb_at(colemak, qwerty, macro, LED0);
+
+        // Second LED
+        switch (get_highest_layer(state)) {
+        case _LOWER:
+            rgblight_setrgb_at(0, 0, 255, LED1);
+            break;
+        case _RAISE:
+            rgblight_setrgb_at(0, 255, 0, LED1);
+            break;
+        case _FN:
+            rgblight_setrgb_at(255, 0, 0, LED1);
+            break;
+        default:
+            rgblight_setrgb_at(0, 0, 0, LED1);
+            break;
+        }
+    } else {
+        rgblight_setrgb_at(0, 0, 0, LED0);
         rgblight_setrgb_at(0, 0, 0, LED1);
-        break;
+        rgblight_setrgb_at(0, 0, 0, LED2);
     }
 
   return state;
@@ -302,12 +333,17 @@ bool led_update_kb(led_t led_state) {
     }
     once = 0;
 
-    uint8_t caps = led_state.caps_lock ? 255 : 0;
-    uint8_t num = led_state.num_lock ? 0 : 255; // Inverted as Numlock should be on by default
-    uint8_t scroll = led_state.scroll_lock ? 255 : 0;
+    if (status_en){
 
-    // Set Last LED
-    rgblight_setrgb_at(caps, num, scroll, LED3);
+        uint8_t caps = led_state.caps_lock ? 255 : 0;
+        uint8_t num = led_state.num_lock ? 0 : 255; // Inverted as Numlock should be on by default
+        uint8_t scroll = led_state.scroll_lock ? 255 : 0;
+
+        // Set Last LED
+        rgblight_setrgb_at(caps, num, scroll, LED3);
+    } else {
+        rgblight_setrgb_at(0, 0, 0, LED3);
+    }
 
     return true;
 }
