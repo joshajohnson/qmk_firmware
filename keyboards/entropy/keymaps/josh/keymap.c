@@ -45,7 +45,7 @@ enum custom_codes{
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT_2U_SS(
-    _______, _______, KC_MUTE, KC_MPLY,  KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,  KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12, KC_INS, KC_DEL,  KC_HOME,  \
+    _______, C(KC_W), KC_MUTE, KC_MPLY,  KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,  KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12, KC_INS, KC_DEL,  KC_HOME,  \
     KC_PMNS, KC_PAST, KC_PSLS,   OSL_M,  KC_GRV,      KC_1,    KC_2,    KC_3,    KC_4,   KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   KC_MINS,  KC_EQL,    KC_BSPC,    KC_PGUP,  \
                KC_P7,   KC_P8,   KC_P9,  KC_TAB,        KC_Q,    KC_W,    KC_F,    KC_P,   KC_G,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_LBRC, KC_RBRC,  KC_BSLS,    KC_PGDN,  \
     KC_PPLS,   KC_P4,   KC_P5,   KC_P6,  KC_BSPC,         KC_A,    KC_R,   KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,   KC_QUOT,          KC_ENT,     KC_END,  \
@@ -116,21 +116,20 @@ Per Key Actions
 */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // static uint8_t f24_tracker;
     static uint8_t macro_flag;
     switch (keycode) {
 
     case RESET:
         if (record->event.pressed) {
-            rgblight_setrgb(255, 0, 0);
-            rgblight_setrgb_range(0, 0, 0, LED0, LED3+1); // Disable Status LEDs
+            rgblight_setrgb(255, 0, 0); // RED underglow when in reset
+            rgblight_setrgb_range(0, 0, 0, LED0, LED3+1); // Disable Status LEDs when going into reset
         } else {
         }
         break;
 
     case STAT_EN:
         if (record->event.pressed) {
-            status_en ^=1;
+            status_en ^=1; // Toggle status enable LEDs
         } else {
         }
         break;
@@ -146,6 +145,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Macro mode for numpad when on _MACRO layer
     if (IS_LAYER_ON(_MACRO) || macro_flag){
+
         switch (keycode){
 
         case KC_PSLS ... KC_PDOT:
@@ -170,7 +170,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 Encoder control
 
 Default:
-Enc 0 & 1: Disabled
+Enc 0: Disabled
+Enc 1: Scroll Up / Down
 Enc 2: Volume up / down / mute
 Enc 3: Media next / prev / play-pause
 
@@ -214,19 +215,76 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             //     tap_code(KC_MPRV);
             // }
         }
-    } else {
+    } else if (IS_LAYER_ON(_MACRO)){
+        if (index == 0) {
+            if (clockwise) {
+                register_code(KC_WRAP);
+                tap_code(KC_A);
+                unregister_code(KC_WRAP);
+            } else {
+                register_code(KC_WRAP);
+                tap_code(KC_B);
+                unregister_code(KC_WRAP);
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                register_code(KC_WRAP);
+                tap_code(KC_C);
+                unregister_code(KC_WRAP);
+            } else {
+                register_code(KC_WRAP);
+                tap_code(KC_D);
+                unregister_code(KC_WRAP);
+            }
+        } else if (index == 2) {
+            if (clockwise) {
+                register_code(KC_WRAP);
+                tap_code(KC_E);
+                unregister_code(KC_WRAP);
+            } else {
+                register_code(KC_WRAP);
+                tap_code(KC_F);
+                unregister_code(KC_WRAP);
+            }
+        } else if (index == 3) {
+             if (clockwise) {
+                register_code(KC_WRAP);
+                tap_code(KC_G);
+                unregister_code(KC_WRAP);
+            } else {
+                register_code(KC_WRAP);
+                tap_code(KC_H);
+                unregister_code(KC_WRAP);
+            }
+        } else if (index == 4) {
+            // if (clockwise) {
+            //     register_code(KC_WRAP);
+            //     tap_code(KC_A);
+            //     unregister_code(KC_WRAP);
+            // } else {
+            //     register_code(KC_WRAP);
+            //     tap_code(KC_B);
+            //     unregister_code(KC_WRAP);
+            // }
+        }
+    }   else {
             if (index == 0) {
             // if (clockwise) {
-            //     tap_code(KC_MNXT);
+            //     tap_code(KC_WH_D);
             // } else {
-            //     tap_code(KC_MPRV);
+            //     tap_code(KC_WH_U);
             // }
         } else if (index == 1) {
-            // if (clockwise) {
-            //     tap_code(KC_MNXT);
-            // } else {
-            //     tap_code(KC_MPRV);
-            // }
+            if (clockwise) {
+                // Normal scroll is too slow, so 3x?
+                tap_code(KC_WH_D);
+                tap_code(KC_WH_D);
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+                tap_code(KC_WH_U);
+                tap_code(KC_WH_U);
+            }
         } else if (index == 2) {
             if (clockwise) {
                 tap_code(KC_VOLU);
@@ -254,7 +312,7 @@ LED CONTROL
 
 LED 0 shows keyboard layout
 OFF:    COLEMAK
-RED:    NOT CONFIGURED
+RED:    NORMAL
 GREEN:  QWERTY
 BLUE:   MACRO
 
@@ -281,12 +339,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     if (status_en) {
 
-        uint8_t colemak = 0;
+        uint8_t normal = 0;
         uint8_t qwerty = 0;
         uint8_t macro = 0;
 
-        if (IS_LAYER_ON(_COLEMAK)){
-            colemak = 0;
+        if (IS_LAYER_ON(_NORMAL)){
+            normal = 255;
         }
         if (IS_LAYER_ON(_QWERTY)){
             qwerty = 255;
@@ -295,7 +353,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             macro = 255;
         }
         // First LED
-        rgblight_setrgb_at(colemak, qwerty, macro, LED0);
+        rgblight_setrgb_at(normal, qwerty, macro, LED0);
 
         // Second LED
         switch (get_highest_layer(state)) {
