@@ -17,3 +17,7 @@
 #pragma once
 
 // place overrides here
+#define LED0 16
+#define LED1 17
+#define LED2 18
+#define LED3 19
