@@ -100,3 +100,11 @@
     { K40, K41, K42, K43, ___, K45, K46, K47, K48, K49, K4a, K4b, K4c, K4d, K4e, K4f, ___,  K411, K412, K413 },  \
     { K50, K51, K52, K53, K54, K55, ___, K57, ___, K59, K5a, ___, K5c, ___, K5e, K5f, K510, K511, K512, K513 }   \
 }
+
+
+
+// Status LED positions
+#define LED0 16
+#define LED1 17
+#define LED2 18
+#define LED3 19
