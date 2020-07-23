@@ -17,3 +17,6 @@
 #pragma once
 
 // place overrides here
+
+// more keys = more room for VIA
+#define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 2047

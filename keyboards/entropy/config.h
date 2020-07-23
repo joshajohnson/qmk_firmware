@@ -103,3 +103,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #define NO_ACTION_MACRO
   #define NO_ACTION_FUNCTION
 #endif
+
+// Status LED positions
+#define LED0 16
+#define LED1 17
+#define LED2 18
+#define LED3 19
