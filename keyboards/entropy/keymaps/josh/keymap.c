@@ -28,6 +28,11 @@
 /* LED control */
 uint8_t status_en = 1;
 
+/* Jiggler */
+static uint32_t key_timer = 0;
+static bool dir = true;
+static bool en = false;
+
 /*
 Custom codes for layers and keys
 */
@@ -38,13 +43,13 @@ enum layer_names {
     _MACRO,
     _LOWER,
     _RAISE,
-    _FN,
-    _DEBUG
+    _FN
 };
 
 enum custom_codes{
     STAT_EN = SAFE_RANGE,
-    UNDER_EN
+    UNDER_EN,
+    JIGGLER
 };
 
 /*
@@ -106,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
     [_FN] = LAYOUT_2U_SS(
-    _______, _______, RGB_TOG, STAT_EN,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
+    JIGGLER, _______, RGB_TOG, STAT_EN,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
     CK_DOWN, _______, _______, KC_NLCK, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,     TG(_QWERTY),  \
              _______, _______, _______,    _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_NORMAL),  \
     CK_UP,   _______, _______, _______,    _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
@@ -141,6 +146,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RGB_TOG:
         if (record->event.pressed) {
             rgblight_setrgb_range(0, 0, 0, LED0, LED3+1); // Disable Status LEDs when disabling RGB
+            return true;
+        } else {
+        }
+        break;
+
+    case JIGGLER:
+        if (record->event.pressed) {
+            en ^= 1;
             return true;
         } else {
         }
@@ -408,4 +421,18 @@ bool led_update_kb(led_t led_state) {
     }
 
     return true;
+}
+
+/*
+Mouse Jiggler
+*/
+void matrix_scan_user(void) {
+    if (timer_elapsed32(key_timer) > 60000) {
+        key_timer = timer_read32();
+        if (en && dir)
+            tap_code(KC_MS_U);
+        else if (en && !dir)
+            tap_code(KC_MS_D);
+        dir ^= 1;
+    }
 }
