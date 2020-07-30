@@ -154,6 +154,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case JIGGLER:
         if (record->event.pressed) {
             en ^= 1;
+            if (en){
+                rgblight_setrgb_at(64, 64, 64, LED2);
+            } else {
+                rgblight_setrgb_at(0, 0, 0, LED2);
+            }
             return true;
         } else {
         }
@@ -390,7 +395,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     } else {
         rgblight_setrgb_at(0, 0, 0, LED0);
         rgblight_setrgb_at(0, 0, 0, LED1);
-        rgblight_setrgb_at(0, 0, 0, LED2);
     }
 
   return state;
