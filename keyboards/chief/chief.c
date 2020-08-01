@@ -48,3 +48,20 @@ bool led_update_kb(led_t led_state) {
     return led_update_user(led_state);
 }
 */
+
+led_config_t g_led_config = { {
+  // Key Matrix to LED Index
+  {  1,  2,  3,  4 },
+  {  5,  6,  7,  8 },
+  {  9, 10, 11, 12 },
+}, {
+  // LED Index to Physical Position
+  {  0,  0 }, { 75,  0 }, { 149,  0 }, { 224,  0 }, \
+  {  0, 32 }, { 75, 32 }, { 149, 32 }, { 224, 32 }, \
+  {  0, 64 }, { 75, 64 }, { 149, 64 }, { 224, 64 }, \
+}, {
+  // LED Index to Flag
+  LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL,
+  LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL
+  }
+};
