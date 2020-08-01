@@ -17,8 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x6A6A  // JJ
 #define PRODUCT_ID      0x1010  // Entropy?
@@ -31,16 +29,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 3
 #define MATRIX_COLS 4
 
-#define DIRECT_PINS { B2, B1, A6, A8, B14, A5, A13, B3, B9, B4, B7, B8}
-
-#define DIODE_DIRECTION COL2ROW
+#define DIRECT_PINS { \
+    { B2,  B1, A6,  A8 }, \
+    { B14, A5, A13, B3 }, \
+    { B9,  B4, B7,  B8 }  \
+}
 
 /* Rotary Encoder Things */
 #define ENCODER_DIRECTION_FLIP
 #define ENCODERS_PAD_A { A7, B12, A14, B5 }
 #define ENCODERS_PAD_B { B0, B13, A15, B6 }
 
-// #define RGB_DI_PIN B15
+#define RGB_DI_PIN B15
 #ifdef RGB_DI_PIN
   #define RGBLED_NUM 20
   #define RGBLIGHT_HUE_STEP 8
