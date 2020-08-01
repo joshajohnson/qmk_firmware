@@ -13,6 +13,8 @@ ENCODER_ENABLE = yes		# Rotary Encoder support
 TAP_DANCE_ENABLE = no 		# Support for tap dancing
 RGB_MATRIX_ENABLE = WS2812	# per key WS2812 support
 WS2812_DRIVER = bitbang		# could not get SPI working on STM32F072
+AUDIO_ENABLE = no          # Audio output
+FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 
 # Enter lower-power sleep mode when on the ChibiOS idle thread
 OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE

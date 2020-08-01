@@ -51,9 +51,9 @@ bool led_update_kb(led_t led_state) {
 
 led_config_t g_led_config = { {
   // Key Matrix to LED Index
-  {  1,  2,  3,  4 },
-  {  5,  6,  7,  8 },
-  {  9, 10, 11, 12 },
+  {  0,  1,  2,  3 },
+  {  4,  5,  6,  7 },
+  {  8,  9, 10, 11 },
 }, {
   // LED Index to Physical Position
   {  0,  0 }, { 75,  0 }, { 149,  0 }, { 224,  0 }, \

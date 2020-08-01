@@ -30,9 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 4
 
 #define DIRECT_PINS { \
-    { B2,  B1, A6,  A8 }, \
-    { B14, A5, A13, B3 }, \
-    { B9,  B4, B7,  B8 }  \
+    { B2,  A8, A13,  B4 }, \
+    { B1, B14,  B3,  B7 }, \
+    { A6,  A5,  B9,  B8 }  \
 }
 
 /* Rotary Encoder Things */
