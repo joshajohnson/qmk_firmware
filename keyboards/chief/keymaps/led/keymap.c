@@ -58,27 +58,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (clockwise) {
-            tap_code16(RGB_HUI);
+            rgb_matrix_step();
         } else {
-            tap_code16(RGB_HUD);
+            rgb_matrix_step_reverse();
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code16(RGB_SAI);
+            rgb_matrix_increase_hue();
         } else {
-            tap_code16(RGB_SAD);
+            rgb_matrix_decrease_hue();
         }
     } else if (index == 2) {
         if (clockwise) {
-            tap_code16(RGB_VAI);
+            rgb_matrix_increase_sat();
         } else {
-            tap_code16(RGB_VAD);
+            rgb_matrix_decrease_sat();
         }
     } else if (index == 3) {
         if (clockwise) {
-            tap_code16(RGB_SPI);
+           rgb_matrix_increase_val();
         } else {
-            tap_code16(RGB_SPD);
+            rgb_matrix_decrease_val();
         }
     }
 }
