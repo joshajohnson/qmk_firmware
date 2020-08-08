@@ -39,8 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Rotary Encoder Things */
 #define ENCODER_DIRECTION_FLIP
-#define ENCODERS_PAD_A { B13, C7, C9, A10 }
-#define ENCODERS_PAD_B { B14, C8, A8, A9 }
+#define ENCODERS_PAD_A { B13, C7, C9, A10, B6 }
+#define ENCODERS_PAD_B { B14, C8, A8,  A9, B7 }
 
 /* Lighting things */
 #define RGBLIGHT_LAYERS
