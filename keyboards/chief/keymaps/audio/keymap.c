@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#define _BASE   0
+#define _LAYER1 1
 
 /* LED control */
 uint8_t status_en = 1;
@@ -29,12 +31,16 @@ enum custom_codes{
 
 // define buttons
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    LAYOUT(
-       RGB_TOG,    RGB_RMOD,    RGB_MOD,    JIGGLER,  \
+    [_BASE] = LAYOUT(
+       MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),  \
        KC_F21,  KC_F22,  KC_F23,  KC_F24,  \
-       KC_A,    KC_A,    KC_A,    KC_A  \
-)
-
+       KC_A,    KC_A,    RGB_TOG,    MO(_LAYER1)  \
+    ),
+    [_LAYER1] = LAYOUT(
+       KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,  \
+       KC_F21,  KC_F22,  KC_F23,  KC_F24,  \
+       KC_B,    KC_B,    KC_B,    KC_TRNS  \
+    ), 
 };
 
 /*
@@ -58,30 +64,59 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (clockwise) {
-            rgb_matrix_step();
-        } else {
-            rgb_matrix_step_reverse();
-        }
-    } else if (index == 1) {
-        if (clockwise) {
-            rgb_matrix_increase_hue();
-        } else {
-            rgb_matrix_decrease_hue();
-        }
-    } else if (index == 2) {
-        if (clockwise) {
-            rgb_matrix_increase_sat();
-        } else {
-            rgb_matrix_decrease_sat();
-        }
-    } else if (index == 3) {
-        if (clockwise) {
-           rgb_matrix_increase_val();
-        } else {
-            rgb_matrix_decrease_val();
-        }
+    switch(biton32(layer_state)) {
+        case 1:     // 1ST LAYER
+            if (index == 0) {
+                if (clockwise) {
+                    rgb_matrix_step();
+                } else {
+                    rgb_matrix_step_reverse();
+                }
+            } else if (index == 1) {
+                if (clockwise) {
+                    rgb_matrix_increase_hue();
+                } else {
+                    rgb_matrix_decrease_hue();
+                }
+            } else if (index == 2) {
+                if (clockwise) {
+                    rgb_matrix_increase_sat();
+                } else {
+                    rgb_matrix_decrease_sat();
+                }
+            } else if (index == 3) {
+                if (clockwise) {
+                    rgb_matrix_increase_val();
+                } else {
+                    rgb_matrix_decrease_val();
+                }
+            }
+        default:    // BASE LAYER
+            if (index == 0) {
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+            } else if (index == 1) {
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+            } else if (index == 2) {
+                if (clockwise) {
+                    tap_code(KC_MNXT);
+                } else {
+                    tap_code(KC_MPRV);
+                }
+            } else if (index == 3) {
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+            }
     }
 }
 
