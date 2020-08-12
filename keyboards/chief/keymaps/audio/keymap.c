@@ -32,14 +32,14 @@ enum custom_codes{
 // define buttons
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
-       MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),  \
-       KC_F21,  KC_F22,  KC_F23,  KC_F24,  \
-       KC_A,    KC_A,    RGB_TOG,    MO(_LAYER1)  \
+       MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),    LT(_LAYER1, KC_F24),  \
+       RGB_TOG,    RGB_TOG,    KC_MSTP,    KC_MPLY,  \
+       KC_F21,  KC_F22,  KC_F23,  KC_F24  \
     ),
     [_LAYER1] = LAYOUT(
        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,  \
-       KC_F21,  KC_F22,  KC_F23,  KC_F24,  \
-       KC_B,    KC_B,    KC_B,    KC_TRNS  \
+       RGB_TOG,    RGB_TOG,    KC_MSTP,    KC_MPLY,  \
+       KC_F21,  KC_F22,  KC_F23,  RGB_TOG  \
     ), 
 };
 
@@ -91,6 +91,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                     rgb_matrix_decrease_val();
                 }
             }
+            break;
         default:    // BASE LAYER
             if (index == 0) {
                 if (clockwise) {
@@ -117,6 +118,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                     tap_code(KC_VOLD);
                 }
             }
+            break;
     }
 }
 
