@@ -87,25 +87,14 @@ static void gpt_cb14(GPTDriver *gptp);
 #define START_CHANNEL_1()        \
     gptStart(&GPTD6, &gpt6cfg1); \
     gptStartContinuous(&GPTD6, 2U)
-#define START_CHANNEL_2()        \
-    gptStart(&GPTD7, &gpt7cfg1); \
-    gptStartContinuous(&GPTD7, 2U)
 #define STOP_CHANNEL_1() gptStopTimer(&GPTD6)
-#define STOP_CHANNEL_2() gptStopTimer(&GPTD7)
 #define RESTART_CHANNEL_1() \
     STOP_CHANNEL_1();       \
     START_CHANNEL_1()
-#define RESTART_CHANNEL_2() \
-    STOP_CHANNEL_2();       \
-    START_CHANNEL_2()
 #define UPDATE_CHANNEL_1_FREQ(freq)              \
     gpt6cfg1.frequency = freq * DAC_BUFFER_SIZE; \
     RESTART_CHANNEL_1()
-#define UPDATE_CHANNEL_2_FREQ(freq)              \
-    gpt7cfg1.frequency = freq * DAC_BUFFER_SIZE; \
-    RESTART_CHANNEL_2()
 #define GET_CHANNEL_1_FREQ (uint16_t)(gpt6cfg1.frequency * DAC_BUFFER_SIZE)
-#define GET_CHANNEL_2_FREQ (uint16_t)(gpt7cfg1.frequency * DAC_BUFFER_SIZE)
 
 /*
  * GPT6 configuration.
@@ -208,13 +197,6 @@ static const dacsample_t dac_buffer[DAC_BUFFER_SIZE] = {
     [DAC_BUFFER_SIZE / 2 ... DAC_BUFFER_SIZE - 1] = 0,
 };
 
-// squarewave
-static const dacsample_t dac_buffer_2[DAC_BUFFER_SIZE] = {
-    // opposite of dac_buffer above
-    [0 ... DAC_BUFFER_SIZE / 2 - 1]               = 0,
-    [DAC_BUFFER_SIZE / 2 ... DAC_BUFFER_SIZE - 1] = DAC_SAMPLE_MAX,
-};
-
 /*
  * DAC streaming callback.
  */
@@ -242,10 +224,6 @@ static const DACConfig dac1cfg1 = {.init = DAC_SAMPLE_MAX, .datamode = DAC_DHRM_
 
 static const DACConversionGroup dacgrpcfg1 = {.num_channels = 1U, .end_cb = end_cb1, .error_cb = error_cb1, .trigger = DAC_TRG(0)};
 
-static const DACConfig dac1cfg2 = {.init = DAC_SAMPLE_MAX, .datamode = DAC_DHRM_12BIT_RIGHT};
-
-static const DACConversionGroup dacgrpcfg2 = {.num_channels = 1U, .end_cb = end_cb1, .error_cb = error_cb1, .trigger = DAC_TRG(0)};
-
 void audio_init() {
     if (audio_initialized) {
         return;
@@ -269,21 +247,21 @@ void audio_init() {
      * by the Reference Manual.
      */
     palSetPadMode(GPIOA, 4, PAL_MODE_INPUT_ANALOG);
-    palSetPadMode(GPIOA, 5, PAL_MODE_INPUT_ANALOG);
+    // palSetPadMode(GPIOA, 5, PAL_MODE_INPUT_ANALOG);
     dacStart(&DACD1, &dac1cfg1);
-    dacStart(&DACD2, &dac1cfg2);
+    // dacStart(&DACD2, &dac1cfg2);
 
     /*
      * Starting GPT6/7 driver, it is used for triggering the DAC.
      */
     START_CHANNEL_1();
-    START_CHANNEL_2();
+    // START_CHANNEL_2();
 
     /*
      * Starting a continuous conversion.
      */
     dacStartConversion(&DACD1, &dacgrpcfg1, (dacsample_t *)dac_buffer, DAC_BUFFER_SIZE);
-    dacStartConversion(&DACD2, &dacgrpcfg2, (dacsample_t *)dac_buffer_2, DAC_BUFFER_SIZE);
+    // dacStartConversion(&DACD2, &dacgrpcfg2, (dacsample_t *)dac_buffer_2, DAC_BUFFER_SIZE);
 
     audio_initialized = true;
 
@@ -303,7 +281,6 @@ void stop_all_notes() {
     voices = 0;
 
     gptStopTimer(&GPTD6);
-    gptStopTimer(&GPTD7);
     gptStopTimer(&GPTD14);
 
     playing_notes = false;
@@ -347,7 +324,6 @@ void stop_note(float freq) {
         }
         if (voices == 0) {
             STOP_CHANNEL_1();
-            STOP_CHANNEL_2();
             gptStopTimer(&GPTD14);
             frequency     = 0;
             frequency_alt = 0;
@@ -415,12 +391,6 @@ static void gpt_cb14(GPTDriver *gptp) {
 
                 if (freq_alt < 30.517578125) {
                     freq_alt = 30.52;
-                }
-
-                if (GET_CHANNEL_2_FREQ != (uint16_t)freq_alt) {
-                    UPDATE_CHANNEL_2_FREQ(freq_alt);
-                } else {
-                    RESTART_CHANNEL_2();
                 }
                 // note_timbre;
             }
@@ -505,7 +475,6 @@ static void gpt_cb14(GPTDriver *gptp) {
 
             if (GET_CHANNEL_1_FREQ != (uint16_t)freq) {
                 UPDATE_CHANNEL_1_FREQ(freq);
-                UPDATE_CHANNEL_2_FREQ(freq);
             }
             // note_timbre;
         } else {
@@ -531,7 +500,6 @@ static void gpt_cb14(GPTDriver *gptp) {
                     current_note = 0;
                 } else {
                     STOP_CHANNEL_1();
-                    STOP_CHANNEL_2();
                     // gptStopTimer(&GPTD14);
                     playing_notes = false;
                     return;
@@ -590,7 +558,6 @@ void play_note(float freq, int vol) {
         gptStart(&GPTD14, &gpt14cfg1);
         gptStartContinuous(&GPTD14, 2U);
         RESTART_CHANNEL_1();
-        RESTART_CHANNEL_2();
     }
 }
 
@@ -621,7 +588,6 @@ void play_notes(float (*np)[][2], uint16_t n_count, bool n_repeat) {
         gptStart(&GPTD14, &gpt14cfg1);
         gptStartContinuous(&GPTD14, 2U);
         RESTART_CHANNEL_1();
-        RESTART_CHANNEL_2();
     }
 }
 
