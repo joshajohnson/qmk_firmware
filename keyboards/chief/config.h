@@ -100,6 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Audio Things */
 #define AUDIO_CLICKY
 #define A4_AUDIO
+// #define STARTUP_SONG SONG(FANTASIE_IMPROMPTU)
 // #ifdef AUDIO_ENABLE
 //   #define STARTUP_SONG SONG(WORKMAN_SOUND)
 // #endif

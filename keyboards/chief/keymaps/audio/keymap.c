@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "muse.h"
 #define _BASE   0
 #define _LAYER1 1
 
@@ -25,15 +26,24 @@ static uint32_t key_timer = 0;
 static bool dir = true;
 static bool en = false;
 
+/* Audio */
+float my_song[][2] = SONG(SANDSTORM);
+// bool muse_mode = false;
+// uint8_t last_muse_note = 0;
+// uint16_t muse_counter = 0;
+// uint8_t muse_offset = 70;
+// uint16_t muse_tempo = 120;
+
 enum custom_codes{
-    JIGGLER = SAFE_RANGE
+    JIGGLER = SAFE_RANGE,
+    SONGTIME
 };
 
 // define buttons
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
        MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),    LT(_LAYER1, KC_F24),  \
-       CK_TOGG,    RGB_TOG,    KC_MSTP,    KC_MPLY,  \
+       CK_TOGG,    RGB_TOG,    JIGGLER,    KC_MPLY,  \
        KC_F21,  KC_F22,  KC_F23,  KC_F24  \
     ),
     [_LAYER1] = LAYOUT(
@@ -59,6 +69,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
         }
         break;
+    
+    case RGB_TOG:
+        if (record->event.pressed) {
+            PLAY_SONG(my_song);
+        }
+        return true;
+    default:
+        return true;
+
+    // case SONGTIME:
+    //     if (record->event.pressed) {
+    //         PLAY_SONG(STARTUP_SOUND);
+    //     }
+    //     break;
     }
     return true;
 }
@@ -94,6 +118,11 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             break;
         default:    // BASE LAYER
             if (index == 0) {
+                // if (clockwise) {
+                //     PLAY_SONG(my_song);
+                // } else {
+                //     PLAY_SONG(my_song);
+                // }
                 if (clockwise) {
                     tap_code(KC_VOLU);
                 } else {
