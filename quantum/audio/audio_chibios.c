@@ -77,7 +77,7 @@ bool     glissando      = true;
 #endif
 float startup_song[][2] = STARTUP_SONG;
 
-static void gpt_cb8(GPTDriver *gptp);
+static void gpt_cb14(GPTDriver *gptp);
 
 #define DAC_BUFFER_SIZE 100
 #ifndef DAC_SAMPLE_MAX
@@ -127,8 +127,8 @@ GPTConfig gpt7cfg1 = {.frequency = 440U * DAC_BUFFER_SIZE,
                       .cr2       = TIM_CR2_MMS_1, /* MMS = 010 = TRGO on Update Event.    */
                       .dier      = 0U};
 
-GPTConfig gpt8cfg1 = {.frequency = 10,
-                      .callback  = gpt_cb8,
+GPTConfig gpt14cfg1 = {.frequency = 10,
+                      .callback  = gpt_cb14,
                       .cr2       = TIM_CR2_MMS_1, /* MMS = 010 = TRGO on Update Event.    */
                       .dier      = 0U};
 
@@ -304,7 +304,7 @@ void stop_all_notes() {
 
     gptStopTimer(&GPTD6);
     gptStopTimer(&GPTD7);
-    gptStopTimer(&GPTD8);
+    gptStopTimer(&GPTD14);
 
     playing_notes = false;
     playing_note  = false;
@@ -348,7 +348,7 @@ void stop_note(float freq) {
         if (voices == 0) {
             STOP_CHANNEL_1();
             STOP_CHANNEL_2();
-            gptStopTimer(&GPTD8);
+            gptStopTimer(&GPTD14);
             frequency     = 0;
             frequency_alt = 0;
             volume        = 0;
@@ -376,7 +376,7 @@ float vibrato(float average_freq) {
 
 #endif
 
-static void gpt_cb8(GPTDriver *gptp) {
+static void gpt_cb14(GPTDriver *gptp) {
     float freq;
 
     if (playing_note) {
@@ -532,7 +532,7 @@ static void gpt_cb8(GPTDriver *gptp) {
                 } else {
                     STOP_CHANNEL_1();
                     STOP_CHANNEL_2();
-                    // gptStopTimer(&GPTD8);
+                    // gptStopTimer(&GPTD14);
                     playing_notes = false;
                     return;
                 }
@@ -587,8 +587,8 @@ void play_note(float freq, int vol) {
             voices++;
         }
 
-        gptStart(&GPTD8, &gpt8cfg1);
-        gptStartContinuous(&GPTD8, 2U);
+        gptStart(&GPTD14, &gpt14cfg1);
+        gptStartContinuous(&GPTD14, 2U);
         RESTART_CHANNEL_1();
         RESTART_CHANNEL_2();
     }
@@ -618,8 +618,8 @@ void play_notes(float (*np)[][2], uint16_t n_count, bool n_repeat) {
         note_length    = ((*notes_pointer)[current_note][1] / 4) * (((float)note_tempo) / 100);
         note_position  = 0;
 
-        gptStart(&GPTD8, &gpt8cfg1);
-        gptStartContinuous(&GPTD8, 2U);
+        gptStart(&GPTD14, &gpt14cfg1);
+        gptStartContinuous(&GPTD14, 2U);
         RESTART_CHANNEL_1();
         RESTART_CHANNEL_2();
     }

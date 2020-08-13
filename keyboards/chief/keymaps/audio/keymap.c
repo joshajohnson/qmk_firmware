@@ -33,7 +33,7 @@ enum custom_codes{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
        MO(_LAYER1),    MO(_LAYER1),    MO(_LAYER1),    LT(_LAYER1, KC_F24),  \
-       RGB_TOG,    RGB_TOG,    KC_MSTP,    KC_MPLY,  \
+       CK_TOGG,    RGB_TOG,    KC_MSTP,    KC_MPLY,  \
        KC_F21,  KC_F22,  KC_F23,  KC_F24  \
     ),
     [_LAYER1] = LAYOUT(

@@ -71,6 +71,24 @@
 #define STM32_ADC_IRQ_PRIORITY              2
 #define STM32_ADC_ADC1_DMA_IRQ_PRIORITY     2
 
+/* DAC attributes.*/
+#define STM32_DAC_DUAL_MODE                 FALSE
+#define STM32_DAC_USE_DAC1_CH1              TRUE
+#define STM32_DAC_USE_DAC1_CH2              TRUE
+#define STM32_DAC_DAC1_CH1_IRQ_PRIORITY     2
+#define STM32_DAC_DAC1_CH2_IRQ_PRIORITY     2
+#define STM32_DAC_DAC1_CH1_DMA_PRIORITY     2
+#define STM32_DAC_DAC1_CH2_DMA_PRIORITY     2
+#define STM32_DAC_DAC1_CH1_DMA_STREAM       STM32_DMA_STREAM_ID(1, 3)
+#define STM32_DAC_DAC1_CH2_DMA_STREAM       STM32_DMA_STREAM_ID(1, 4)
+// #define STM32_HAS_DAC1_CH1                  TRUE
+// #define STM32_DAC_DAC1_CH1_DMA_STREAM       STM32_DMA_STREAM_ID(1, 3)
+// #define STM32_DAC1_CH1_DMA_CHN              0x00000000
+
+// #define STM32_HAS_DAC1_CH2                  TRUE
+// #define STM32_DAC1_CH1_DMA_MSK       STM32_DMA_STREAM_ID(1, 4)
+// #define STM32_DAC1_CH2_DMA_CHN              0x00000000
+
 /*
  * EXT driver system settings.
  */
@@ -86,11 +104,16 @@
 #define STM32_GPT_USE_TIM1                  FALSE
 #define STM32_GPT_USE_TIM2                  FALSE
 #define STM32_GPT_USE_TIM3                  FALSE
-#define STM32_GPT_USE_TIM14                 FALSE
+#define STM32_GPT_USE_TIM14                 TRUE
+#define STM32_GPT_USE_TIM6                  TRUE
+#define STM32_GPT_USE_TIM7                  TRUE
 #define STM32_GPT_TIM1_IRQ_PRIORITY         2
 #define STM32_GPT_TIM2_IRQ_PRIORITY         2
 #define STM32_GPT_TIM3_IRQ_PRIORITY         2
 #define STM32_GPT_TIM14_IRQ_PRIORITY        2
+#define STM32_GPT_TIM6_IRQ_PRIORITY        2
+#define STM32_GPT_TIM7_IRQ_PRIORITY        2
+
 
 /*
  * I2C driver system settings.
