@@ -230,6 +230,10 @@ void process_action(keyrecord_t *record, action_t action) {
     uint8_t tap_count = record->tap.count;
 #endif
 
+        if (record->event.pressed) {
+            register_code(KC_F22);
+        }
+
     if (event.pressed) {
         // clear the potential weak mods left by previously pressed keys
         clear_weak_mods();
@@ -734,6 +738,11 @@ void process_action(keyrecord_t *record, action_t action) {
         layer_off(get_oneshot_layer());
     }
 #endif
+        if (record->event.pressed) {
+            // Don't do anything
+        }else {
+            unregister_code(KC_F22);
+        }
 }
 
 /** \brief Utilities for actions. (FIXME: Needs better description)
