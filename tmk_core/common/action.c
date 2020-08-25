@@ -231,7 +231,7 @@ void process_action(keyrecord_t *record, action_t action) {
 #endif
 
         if (record->event.pressed) {
-            register_code(KC_F22);
+            register_code(KC_F24);
         }
 
     if (event.pressed) {
@@ -741,7 +741,7 @@ void process_action(keyrecord_t *record, action_t action) {
         if (record->event.pressed) {
             // Don't do anything
         }else {
-            unregister_code(KC_F22);
+            unregister_code(KC_F24);
         }
 }
 
