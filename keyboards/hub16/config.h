@@ -20,16 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID 0x6A6A
-#define PRODUCT_ID 0x4810
+#define VENDOR_ID  0xFEED
+#define PRODUCT_ID 0xBEEF
 #define DEVICE_VER 0x0001
-#define MANUFACTURER Josh Johnson
-#define PRODUCT Hub16
-#define DESCRIPTION Macro Pad with USB Hub and Encoders
+#define MANUFACTURER Kevin
+#define PRODUCT     Ludmila
+#define DESCRIPTION The best keyboard ever!
 
 /* key matrix size */
-#define MATRIX_ROWS 5
-#define MATRIX_COLS 4
+#define MATRIX_ROWS 3
+#define MATRIX_COLS 2
 
 /*
  * Keyboard Matrix Assignments
@@ -42,16 +42,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #define MATRIX_ROW_PINS \
-    { F0, C7, C6, B6, E6}
+    { F0, C7 }
 #define MATRIX_COL_PINS \
-    { F4, F1, D5, D3 }
+    { F4, F1 }
 
 /* COL2ROW, ROW2COL*/
 #define DIODE_DIRECTION COL2ROW
 
 #define RGB_DI_PIN D1
 // #ifdef RGB_DI_PIN
-#define RGBLED_NUM 11
+#define RGBLED_NUM 5
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
@@ -60,10 +60,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // /*== all animations enable ==*/
 // #define RGBLIGHT_ANIMATIONS
 // /*== or choose animations ==*/
-#define RGBLIGHT_EFFECT_BREATHING
+// #define RGBLIGHT_EFFECT_BREATHING
 #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-#define RGBLIGHT_EFFECT_SNAKE
+// #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+// #define RGBLIGHT_EFFECT_SNAKE
 #define RGBLIGHT_EFFECT_KNIGHT
 //   #define RGBLIGHT_EFFECT_CHRISTMAS
 //   #define RGBLIGHT_EFFECT_STATIC_GRADIENT
@@ -83,9 +83,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* ENCODER THINGS */
 // #define ENCODER_DIRECTION_FLIP
 #define ENCODERS_PAD_A \
-    { F6, B4 }
+    { F6 }
 #define ENCODERS_PAD_B \
-    { F5, B5 }
+    { F5 }
 
 /* Tap Dance timing */
 #define TAPPING_TERM 200

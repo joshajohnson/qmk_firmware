@@ -21,44 +21,21 @@ enum keyboard_layers{
     _CONTROL
 };
 
-// Tap Dance Declarations
-enum tap_dance { TD_TO_LED = 0, TD_TO_DEFAULT = 1 };
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for standard key, twice to toggle to control layer
-    [TD_TO_LED]     = ACTION_TAP_DANCE_DUAL_ROLE(KC_P, _CONTROL),
-    [TD_TO_DEFAULT] = ACTION_TAP_DANCE_DUAL_ROLE(KC_P, _BASE)};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT( /* Base */
-        KC_S,      KC_V,    
-    KC_A, KC_B, KC_C, KC_D, 
-    KC_E, KC_F, KC_G, KC_H, 
-    KC_I, KC_J, KC_K, KC_L, 
-    KC_M, KC_N, KC_O, TD(TD_TO_LED) 
+    KC_A, KC_B, KC_C,
+    KC_D, KC_E
+
   ),
 
-  [_CONTROL] = LAYOUT( /* LED Control */
-          KC_NO,            KC_NO,        
-    _______, RGB_MOD, RGB_RMOD, RGB_TOG,
-    RGB_VAD, RGB_VAI, RGB_HUD,  RGB_HUI, 
-    RGB_SAD, RGB_SAI, _______,  _______, 
-    _______, _______, RESET,    TD(TD_TO_DEFAULT) 
-  ),
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) { /* Left Encoder */
+    if (index == 0) {
         if (clockwise) {
-            tap_code(KC_R);
+            tap_code(KC_F);
         } else {
-            tap_code(KC_Q);
-        }
-    } else if (index == 1) { /* Right Encoder */
-        if (clockwise) {
-            tap_code(KC_U);
-        } else {
-            tap_code(KC_T);
+            tap_code(KC_G);
         }
     }
 }
@@ -72,7 +49,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     SEND_STRING(SS_LCTL(SS_LSFT("v")));
     //   } else {
     //   }
-    //   break; 
+    //   break;
   }
   return true;
 };
