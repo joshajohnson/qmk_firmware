@@ -25,7 +25,7 @@ enum custom_keycodes{
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT(
-    MACRO_1, MACRO_2,
+    MACRO_1, RGB_TOG,
     MACRO_3, MACRO_4
   )
 };
@@ -34,19 +34,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case MACRO_1:
         if (record->event.pressed) {
-        SEND_STRING(SS_LCTL(SS_LSFT("M"))); // Mute Webex
+        SEND_STRING(SS_LCTL("m")); // Mute Webex
       }
 
-    case MACRO_2:
-        tap_code(KC_MPLY); // Play / Pause Music
-      break;
+    // case MACRO_2:
+    //     tap_code16(RGB_TOG);
+    //   break;
 
     case MACRO_3:
-        SEND_STRING(SS_LCTL(SS_LALT("D"))); // Share Screen
+        SEND_STRING(SS_LCTL(SS_LALT("d"))); // Share Screen
         break;
 
     case MACRO_4:
-        SEND_STRING(SS_LCTL(SS_LALT("A"))); // Share Application
+        SEND_STRING(SS_LCTL(SS_LALT("a"))); // Share Application
         break;
   }
   return true;
