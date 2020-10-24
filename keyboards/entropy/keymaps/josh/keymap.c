@@ -15,6 +15,8 @@
  */
 #include QMK_KEYBOARD_H
 
+#include "muse.h"
+
 // Useability defines
 #define ___ KC_NO
 #define KC_WRAP KC_F22
@@ -33,6 +35,15 @@ static uint32_t key_timer = 0;
 static bool dir = true;
 static bool en = false;
 
+/* Bangeas */
+float darude[][2] = SONG(SANDSTORM);
+float ussr[][2] = SONG(USSR_ANTHEM);
+float all_star[][2] = SONG(ALL_STAR);
+float rick_roll[][2] = SONG(RICK_ROLL);
+float m_theme[][2] = SONG(MARIO_THEME);
+float m_game[][2] = SONG(MARIO_GAMEOVER);
+float m_mushroom[][2] = SONG(MARIO_MUSHROOM);
+
 /*
 Custom codes for layers and keys
 */
@@ -49,7 +60,14 @@ enum layer_names {
 enum custom_codes{
     STAT_EN = SAFE_RANGE,
     UNDER_EN,
-    JIGGLER
+    JIGGLER,
+    SNDSTRM,
+    USSR,
+    ALLSTR,
+    RCKRLL,
+    M_THM,
+    M_GMVR,
+    M_MSHRM
 };
 
 /*
@@ -113,10 +131,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FN] = LAYOUT_2U_SS(
     JIGGLER, _______, RGB_TOG, STAT_EN,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RESET,  \
     CK_DOWN, _______, _______, KC_NLCK, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     _______,     TG(_QWERTY),  \
-             _______, _______, _______,    _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_NORMAL),  \
-    CK_UP,   _______, _______, _______,    _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
-             _______, _______, _______,    _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,      _______,     _______, _______,  \
-    CK_TOGG, _______,          _______,    _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
+              RCKRLL,   M_THM, _______,    _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______,  TG(_NORMAL),  \
+    CK_UP,      USSR,  M_GMVR, _______,    _______,        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______,      _______,  \
+              ALLSTR, M_MSHRM, _______,    _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,      _______,     _______, _______,  \
+    CK_TOGG, SNDSTRM,          _______,    _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
 )
 
 };
@@ -163,6 +181,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
         }
         break;
+
+
+    case SNDSTRM:
+        if (record->event.pressed) {
+            PLAY_SONG(darude);
+        }
+        return true;
+
+    case USSR:
+        if (record->event.pressed) {
+            PLAY_SONG(ussr);
+        }
+        return true;
+
+    case ALLSTR:
+        if (record->event.pressed) {
+            PLAY_SONG(all_star);
+        }
+        return true;
+
+    case RCKRLL:
+        if (record->event.pressed) {
+            PLAY_SONG(rick_roll);
+        }
+        return true;
+
+    case M_THM:
+        if (record->event.pressed) {
+            PLAY_SONG(m_theme);
+        }
+        return true;
+
+    case M_GMVR:
+        if (record->event.pressed) {
+            PLAY_SONG(m_game);
+        }
+        return true;
+
+    case M_MSHRM:
+        if (record->event.pressed) {
+            PLAY_SONG(m_mushroom);
+        }
+        return true;
     }
 
     // Macro mode for numpad when on _MACRO layer
