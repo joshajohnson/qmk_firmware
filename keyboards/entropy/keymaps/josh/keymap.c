@@ -35,15 +35,6 @@ static uint32_t key_timer = 0;
 static bool dir = true;
 static bool en = false;
 
-/* Bangeas */
-float darude[][2] = SONG(SANDSTORM);
-float ussr[][2] = SONG(USSR_ANTHEM);
-float all_star[][2] = SONG(ALL_STAR);
-float rick_roll[][2] = SONG(RICK_ROLL);
-float m_theme[][2] = SONG(MARIO_THEME);
-float m_game[][2] = SONG(MARIO_GAMEOVER);
-float m_mushroom[][2] = SONG(MARIO_MUSHROOM);
-
 /*
 Custom codes for layers and keys
 */
@@ -113,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT_2U_SS(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  \
     _______, _______, _______, TG(_MACRO), _______, KC_F1,    KC_F2,   KC_F3,   KC_F4,  KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,     _______,       _______,  \
-             _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______,    _______,   _______,  \
+             _______, _______, _______,  KC_ESC,     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______,    _______,   _______,  \
     _______, _______, _______, _______,  KC_DEL,        KC_LEFT, KC_DOWN,  KC_UP, KC_RIGHT, _______, _______,  KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, _______,       _______,     _______,  \
              _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,  KC_END, KC_HOME, _______, _______,      _______,     _______, _______,  \
     _______, _______,          _______, _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
@@ -122,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT_2U_SS(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  \
     _______, _______, _______, KC_CAPS, _______, KC_F1,    KC_F2,   KC_F3,   KC_F4,  KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,      _______,      _______,  \
-             _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______,    _______,   _______,  \
+             _______, _______, _______,  KC_ESC,     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______,    _______,   _______,  \
     _______, _______, _______, _______,  KC_DEL,        KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, _______,        _______,      _______,  \
              _______, _______, _______, _______,          _______, _______, KC_BTN1, KC_BTN2, _______, _______,  KC_END, KC_HOME, _______, _______,      _______,     _______, _______,  \
     _______, _______,          _______, _______,   _______,    _______,         _______,       _______,      _______,        _______,              _______,  _______, _______, _______
@@ -181,49 +172,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
         }
         break;
-
-
-    case SNDSTRM:
-        if (record->event.pressed) {
-            PLAY_SONG(darude);
-        }
-        return true;
-
-    case USSR:
-        if (record->event.pressed) {
-            PLAY_SONG(ussr);
-        }
-        return true;
-
-    case ALLSTR:
-        if (record->event.pressed) {
-            PLAY_SONG(all_star);
-        }
-        return true;
-
-    case RCKRLL:
-        if (record->event.pressed) {
-            PLAY_SONG(rick_roll);
-        }
-        return true;
-
-    case M_THM:
-        if (record->event.pressed) {
-            PLAY_SONG(m_theme);
-        }
-        return true;
-
-    case M_GMVR:
-        if (record->event.pressed) {
-            PLAY_SONG(m_game);
-        }
-        return true;
-
-    case M_MSHRM:
-        if (record->event.pressed) {
-            PLAY_SONG(m_mushroom);
-        }
-        return true;
     }
 
     // Macro mode for numpad when on _MACRO layer
