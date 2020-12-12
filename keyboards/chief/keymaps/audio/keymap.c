@@ -92,27 +92,27 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         case 1:     // 1ST LAYER
             if (index == 0) {
                 if (clockwise) {
-                    rgb_matrix_step();
+                    rgblight_step();
                 } else {
-                    rgb_matrix_step_reverse();
+                    rgblight_step_reverse();
                 }
             } else if (index == 1) {
                 if (clockwise) {
-                    rgb_matrix_increase_hue();
+                    rgblight_increase_hue();
                 } else {
-                    rgb_matrix_decrease_hue();
+                    rgblight_decrease_hue();
                 }
             } else if (index == 2) {
                 if (clockwise) {
-                    rgb_matrix_increase_sat();
+                    rgblight_increase_sat();
                 } else {
-                    rgb_matrix_decrease_sat();
+                    rgblight_decrease_sat();
                 }
             } else if (index == 3) {
                 if (clockwise) {
-                    rgb_matrix_increase_val();
+                    rgblight_increase_val();
                 } else {
-                    rgb_matrix_decrease_val();
+                    rgblight_decrease_val();
                 }
             }
             break;

@@ -49,6 +49,7 @@ bool led_update_kb(led_t led_state) {
 }
 */
 
+/*
 led_config_t g_led_config = { {
   // Key Matrix to LED Index
   {  0,  1,  2,  3 },
@@ -65,3 +66,4 @@ led_config_t g_led_config = { {
   LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL
   }
 };
+*/
