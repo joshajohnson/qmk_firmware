@@ -375,13 +375,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         uint8_t macro = 0;
 
         if (IS_LAYER_ON(_NORMAL)){
-            normal = 255;
+            normal = 32;
         }
         if (IS_LAYER_ON(_QWERTY)){
-            qwerty = 255;
+            qwerty = 32;
         }
         if (IS_LAYER_ON(_MACRO)){
-            macro = 255;
+            macro = 32;
         }
         // First LED
         rgblight_setrgb_at(normal, qwerty, macro, LED0);
@@ -389,13 +389,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         // Second LED
         switch (get_highest_layer(state)) {
         case _LOWER:
-            rgblight_setrgb_at(0, 0, 255, LED1);
+            rgblight_setrgb_at(0, 0, 64, LED1);
             break;
         case _RAISE:
-            rgblight_setrgb_at(0, 255, 0, LED1);
+            rgblight_setrgb_at(0, 64, 0, LED1);
             break;
         case _FN:
-            rgblight_setrgb_at(255, 0, 0, LED1);
+            rgblight_setrgb_at(64, 0, 0, LED1);
             break;
         default:
             rgblight_setrgb_at(0, 0, 0, LED1);
@@ -423,9 +423,9 @@ bool led_update_kb(led_t led_state) {
 
     if (status_en){
 
-        uint8_t caps = led_state.caps_lock ? 255 : 0;
-        uint8_t num = led_state.num_lock ? 0 : 255; // Inverted as Numlock should be on by default
-        uint8_t scroll = led_state.scroll_lock ? 255 : 0;
+        uint8_t caps = led_state.caps_lock ? 64 : 0;
+        uint8_t num = led_state.num_lock ? 0 : 64; // Inverted as Numlock should be on by default
+        uint8_t scroll = led_state.scroll_lock ? 64 : 0;
 
         // Set Last LED
         rgblight_setrgb_at(caps, num, scroll, LED3);
