@@ -35,6 +35,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+/* Rotary Encoder Things */
+// #define ENCODER_DIRECTION_FLIP
+#define ENCODERS_PAD_A { B0 }
+#define ENCODERS_PAD_B { E6 }
+
 #define RGB_DI_PIN D5
 #ifdef RGB_DI_PIN
 #    define RGBLED_NUM 15
