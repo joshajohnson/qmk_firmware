@@ -20,27 +20,6 @@
 
 #define XXX KC_NO
 
-/* Crazy Keyboard 68 (ANSI) layout
- * ,----------------------------------------------------------------.
- * | 00 |01| 02| 03| 04| 05| 06| 07| 08| 09| 0a| 0b| 0c| 0d    | 0e |
- * |----------------------------------------------------------------|
- * | 10  | 11| 12| 13| 14| 15| 16| 17| 18| 19| 1a| 1b| 1c|  1d | 1e |
- * |----------------------------------------------------------------|
- * | 20    | 22| 23| 24| 25| 26| 27| 28| 29| 2a| 2b| 2c| 2d    | 2e |
- * |----------------------------------------------------------------|
- * | 31     | 32| 33| 34| 35| 36| 37| 38| 39| 3a| 3b|    3c| 3d| 3e |
- * |----------------------------------------------------------------|
- * | 40 | 41 | 43 |        46             | 49| 4a|  4b| 4c| 4d| 4e |
- * `----------------------------------------------------------------'
- *
- * This is a shortcut to help you visually see your layout.
- *
- * The first section contains all of the arguments representing the physical
- * layout of the board and position of the keys.
- *
- * The second converts the arguments into a two-dimensional array which
- * represents the switch matrix.
- */
 #define LAYOUT( \
     k00,  k01, k02, k03, k04, k05, k06, k07, k08, k09, k0a, k0b, k0c, k0d, k0e,        \
     k10,  k11, k12, k13, k14, k15, k16, k17, k18, k19, k1a, k1b, k1c, k1d, k1e,   k1f, \
