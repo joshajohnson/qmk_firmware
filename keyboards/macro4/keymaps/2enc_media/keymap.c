@@ -18,12 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT(
-    KC_1, KC_2,
+    KC_MUTE, KC_MPLY,
     KC_3, KC_4
   )
 };
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) { /* First encoder */
         if (clockwise) {
             tap_code(KC_VOLU);
@@ -37,4 +37,6 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_MPRV);
         }
     }
+
+    return true;
 };
