@@ -66,3 +66,30 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     return true;
 }
+
+
+// Caps lock indicator
+bool led_update_kb(led_t led_state) {
+
+    static bool led_on = false;
+
+    if (led_state.caps_lock)
+    {
+        if (rgblight_is_enabled())
+        {
+            led_on = true;
+            rgblight_disable();
+        }
+        rgblight_setrgb(000,255,000);
+    }
+    else 
+    {
+        rgblight_setrgb(0,0,0);
+        if (led_on)
+        {
+            led_on = false;
+            rgblight_enable();
+        }
+    }
+    return true;
+}
