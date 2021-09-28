@@ -67,29 +67,21 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 
-
 // Caps lock indicator
-bool led_update_kb(led_t led_state) {
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, RGBLED_NUM, HSV_GREEN}
+);
 
-    static bool led_on = false;
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_capslock_layer
+);
 
-    if (led_state.caps_lock)
-    {
-        if (rgblight_is_enabled())
-        {
-            led_on = true;
-            rgblight_disable();
-        }
-        rgblight_setrgb(000,255,000);
-    }
-    else 
-    {
-        rgblight_setrgb(0,0,0);
-        if (led_on)
-        {
-            led_on = false;
-            rgblight_enable();
-        }
-    }
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(0, led_state.caps_lock);
     return true;
 }
