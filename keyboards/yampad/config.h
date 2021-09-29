@@ -46,6 +46,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+/* ENCODER THINGS */
+// #define ENCODER_DIRECTION_FLIP
+#define ENCODERS_PAD_A { F5 }
+#define ENCODERS_PAD_B { F6 }
+
 /* Underlight configuration */
 #define RGB_DI_PIN F4
 #define RGBLED_NUM 9

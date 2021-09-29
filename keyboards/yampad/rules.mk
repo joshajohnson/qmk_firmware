@@ -23,3 +23,4 @@ AUDIO_ENABLE = no           # Audio output
 OLED_ENABLE = yes
 OLED_DRIVER = SSD1306
 DEBOUNCE_TYPE = sym_eager_pk
+ENCODER_ENABLE = yes
