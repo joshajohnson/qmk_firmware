@@ -1,1 +1,1 @@
-DEFAULT_FOLDER = dumbpad/v0x
+DEFAULT_FOLDER = dumbpad/v1x_dualencoder

@@ -22,3 +22,8 @@ AUDIO_ENABLE = no           # Audio output
 
 ENCODER_ENABLE = yes
 KEY_LOCK_ENABLE = yes
+
+OLED_ENABLE = yes
+OLED_DRIVER = SSD1306
+OLED_DRIVER_ENABLE = yes
+WPM_ENABLE = yes

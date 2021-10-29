@@ -29,13 +29,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define UNUSED_PINS
 
 /* Dual rotary encoders */
-#define ENCODERS_PAD_A { B2, D0 }
-#define ENCODERS_PAD_B { D4, D1 }
-
-/* Onboard LEDs */
-#define LED_00 B6
-#define LED_01 B1
-#define LED_02 B3
+#define ENCODERS_PAD_A { B2, D2 }
+#define ENCODERS_PAD_B { D4, D3 }
 
 /* Bootmagic - hold down rotary encoder pushbutton while plugging in to enter bootloader */
 #define BOOTMAGIC_LITE_ROW 3
