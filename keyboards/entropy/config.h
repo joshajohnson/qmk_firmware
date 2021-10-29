@@ -83,9 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Slow down key press speed to ensure computer picks it up */
 #define TAP_CODE_DELAY 20
 
-/* Audio Things */
-#define AUDIO_CLICKY
-
 /* Mouse Things */
 #define MOUSEKEY_INTERVAL       20
 #define MOUSEKEY_DELAY          300
