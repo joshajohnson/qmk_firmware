@@ -20,26 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x5950 // YP
-#define PRODUCT_ID      0x8383
+#define VENDOR_ID       0x4B43 // CK
+#define PRODUCT_ID      0x5950 // YP
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Mattia Dal Ben
 #define PRODUCT         Yampad
 
-/* key matrix size */
+/* key matrix */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 4
 
-/*
- * Keyboard Matrix Assignments
- *
- * Change this to how you wired your keyboard
- * COLS: AVR pins used for columns, left to right
- * ROWS: AVR pins used for rows, top to bottom
- * DIODE_DIRECTION: COL2ROW = COL = Anode (+), ROW = Cathode (-, marked on diode)
- *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
- *
-*/
 #define MATRIX_ROW_PINS { C6, D7, E6, B4, B5 }
 #define MATRIX_COL_PINS { B1, B3, B2, B6 }
 
@@ -48,8 +38,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* ENCODER THINGS */
 // #define ENCODER_DIRECTION_FLIP
-#define ENCODERS_PAD_A { F5 }
-#define ENCODERS_PAD_B { F6 }
+#define ENCODERS_PAD_A { F6 }
+#define ENCODERS_PAD_B { F5 }
 
 /* Underlight configuration */
 #define RGB_DI_PIN F4

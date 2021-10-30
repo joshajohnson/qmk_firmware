@@ -1,6 +1,7 @@
 /* MIT License
 
 Copyright (c) 2019 Mattia Dal Ben
+Copyright (c) 2021 Josh Johnson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -119,10 +120,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (clockwise) 
     {
-        tap_code(KC_VOLD);
+        tap_code(KC_VOLU);
     } else 
     {
-        tap_code(KC_VOLU);
+        tap_code(KC_VOLD);
     }
     return true;
 }
