@@ -1,4 +1,5 @@
 /* Copyright 2020 imchipwood
+ * Copyright 2021 Josh Johnson
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
 char wpm_str[10];
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /*
+        /*
             BASE LAYER
     /-----------------------------------------------------`
     |             |    7    |    8    |    9    |  Bkspc  |
@@ -28,14 +29,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |             |---------|---------|---------|---------|
     |             |    1    |    2    |    3    |   Tab   |
     |-------------|---------|---------|---------|---------|
-    | Left mouse  |  TT(1)  |    0    |    .    |  Enter  |
+    | Play Pause  |  TT(1)  |    0    |    .    |  Enter  |
     \-----------------------------------------------------'
     */
     [0] = LAYOUT(
                     KC_7,      KC_8,    KC_9,             KC_BSPC,
                     KC_4,      KC_5,    KC_6,             KC_ESC,
                     KC_1,      KC_2,    KC_3,             KC_TAB,
-        KC_BTN1,    TT(1),     KC_0,    LSFT_T(KC_DOT),   KC_ENTER
+        KC_MPLY,    TT(1),     KC_0,    LSFT_T(KC_DOT),   KC_ENTER
     ),
     /*
             SUB LAYER
@@ -55,72 +56,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     _______,     _______,     _______,      KC_KP_MINUS,
         KC_LOCK,    _______,     _______,     _______,      KC_EQL
     ),
+
+    [2] = LAYOUT(
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+        _______,    _______,     _______,     _______,      _______
+    ),
+
+    [3] = LAYOUT(
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+        _______,    _______,     _______,     _______,      _______
+    )
 };
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    /*  Custom encoder control - handles CW/CCW turning of encoder
-     *  Default behavior:
-     *    left encoder:
-     *      main layer:
-     *         CW: move mouse right
-     *        CCW: move mouse left
-     *      other layers:
-     *         CW: = (equals/plus - increase slider in Adobe products)
-     *        CCW: - (minus/underscore - decrease slider in adobe products)
-     *    right encoder:
-     *      main layer:
-     *         CW: colume up
-     *        CCW: volume down
-     *      other layers:
-     *         CW: right arrow
-     *        CCW: left arrow
-     */
+    // Right encoder
     if (index == 0) {
-        switch (get_highest_layer(layer_state)) {
-            case 0:
-                // main layer - move mouse right (CW) and left (CCW)
-                if (clockwise) {
-                    tap_code(KC_PGUP);
-                } else {
-                    tap_code(KC_PGDN);
-                }
-                break;
-
-            default:
-                // other layers - =/+ (quals/plus) (CW) and -/_ (minus/underscore) (CCW)
-                if (clockwise) {
-                    tap_code(KC_EQL);
-                } else {
-                    tap_code(KC_MINS);
-                }
-                break;
+        if (clockwise) {
+            tap_code(KC_MNXT);
+        } else {
+            tap_code(KC_MPRV);
         }
+    // Left encoder
     } else if (index == 1) {
-        switch (get_highest_layer(layer_state)) {
-            case 0:
-                // main layer - volume up (CW) and down (CCW)
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
-                break;
-
-            default:
-                // other layers - right (CW) and left (CCW)
-                if (clockwise) {
-                    tap_code(KC_RIGHT);
-                } else {
-                    tap_code(KC_LEFT);
-                }
-                break;
+        if (clockwise) {
+            tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
         }
     }
     return true;
 }
-
-// OLED STUFF STARTS HERE
-// based on https://github.com/qmk/qmk_firmware/blob/master/keyboards/kyria/keymaps/j-inc/keymap.c
 
 #ifdef OLED_ENABLE
 // WPM-responsive animation stuff here
@@ -225,7 +194,7 @@ void oled_task_user(void) {
     render_anim();  // renders pixelart
 
     oled_set_cursor(0, 0);                            // sets cursor to (row, column) using charactar spacing (5 rows on 128x32 screen, anything more will overflow back to the top)
-    sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
+    sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change what shows up, edit %03d to change how many digits show up
     oled_write(wpm_str, false);                       // writes wpm on top left corner of string
 
     led_t led_state = host_keyboard_led_state();  // caps lock stuff, prints CAPS on new line if caps led is on

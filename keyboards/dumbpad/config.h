@@ -1,5 +1,6 @@
 /*
 Copyright 2020 imchipwood
+Copyright 2021 Josh Johnson
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x0913
-#define DEVICE_VER      0x0010
+#define VENDOR_ID       0x434B // CK
+#define PRODUCT_ID      0x4050 // DP
+#define DEVICE_VER      0x0001
 #define MANUFACTURER    imchipwood
 #define PRODUCT         dumbpad
 
