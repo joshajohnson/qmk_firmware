@@ -15,7 +15,6 @@
  */
 #include QMK_KEYBOARD_H
 
-#include <stdio.h>
 char wpm_str[10];
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,6 +54,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     _______,     _______,     _______,      KC_KP_MINUS,
         KC_LOCK,    _______,     _______,     _______,      KC_EQL
     ),
+
+    [2] = LAYOUT(
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+        _______,    _______,     _______,     _______,      _______
+    ),
+
+    [3] = LAYOUT(
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+        _______,    _______,     _______,     _______,      _______
+    )
 };
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -122,7 +135,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // OLED STUFF STARTS HERE
 // based on https://github.com/qmk/qmk_firmware/blob/master/keyboards/kyria/keymaps/j-inc/keymap.c
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 // WPM-responsive animation stuff here
 #    define IDLE_FRAMES 5
 #    define IDLE_SPEED 20  // below this wpm value your animation will idle
@@ -225,8 +238,9 @@ void oled_task_user(void) {
     render_anim();  // renders pixelart
 
     oled_set_cursor(0, 0);                            // sets cursor to (row, column) using charactar spacing (5 rows on 128x32 screen, anything more will overflow back to the top)
-    sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
-    oled_write(wpm_str, false);                       // writes wpm on top left corner of string
+    // sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
+    get_current_wpm();
+    // oled_write(wpm_str, false);                       // writes wpm on top left corner of string
 
     led_t led_state = host_keyboard_led_state();  // caps lock stuff, prints CAPS on new line if caps led is on
     oled_set_cursor(0, 1);

@@ -21,8 +21,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x0913
+#define DEVICE_VER      0x0010
 #define MANUFACTURER    imchipwood
 #define PRODUCT         dumbpad
+
+/* Column/Row IO definitions */
+#define MATRIX_ROWS 4
+#define MATRIX_COLS 5
+
+#define MATRIX_ROW_PINS { F4, F5, F6, F7 }
+#define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
+#define UNUSED_PINS
+
+/* Dual rotary encoders */
+#define ENCODERS_PAD_A { B2, D0 }
+#define ENCODERS_PAD_B { D4, D1 }
 
 /* Column/Row IO definitions */
 #define DIODE_DIRECTION COL2ROW

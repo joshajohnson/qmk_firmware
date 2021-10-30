@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-#include "dumbpad.h"
+#include "quantum.h"
 
 #define LAYOUT( \
 	       k01, k02, k03, k04, \
