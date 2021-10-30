@@ -29,9 +29,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define UNUSED_PINS
 
 /* Dual rotary encoders */
-#define ENCODERS_PAD_A { B2, D2 }
-#define ENCODERS_PAD_B { D4, D3 }
+#define ENCODERS_PAD_A { D4, D3 }
+#define ENCODERS_PAD_B { B2, D2 }
 
-/* Bootmagic - hold down rotary encoder pushbutton while plugging in to enter bootloader */
-#define BOOTMAGIC_LITE_ROW 3
-#define BOOTMAGIC_LITE_COLUMN 0
+/* Enable OLED */
+#define OLED_DRIVER_ENABLE

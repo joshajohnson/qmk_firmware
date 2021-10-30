@@ -15,6 +15,9 @@
  */
 #include QMK_KEYBOARD_H
 
+#include <stdio.h>
+char wpm_str[10];
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
             BASE LAYER
@@ -54,24 +57,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // If console is enabled, it will print the matrix position and status of each key pressed
-/*
-#ifdef CONSOLE_ENABLE
-    uprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
-#endif
-*/
-    return true;
-}
-
-void keyboard_post_init_user(void) {
-    // Customise these values to desired behaviour
-    // debug_enable = true;
-    // debug_matrix = true;
-    // debug_keyboard = true;
-    // debug_mouse = true;
-}
-
 bool encoder_update_user(uint8_t index, bool clockwise) {
     /*  Custom encoder control - handles CW/CCW turning of encoder
      *  Default behavior:
@@ -95,9 +80,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             case 0:
                 // main layer - move mouse right (CW) and left (CCW)
                 if (clockwise) {
-                    tap_code(KC_MS_R);
+                    tap_code(KC_PGUP);
                 } else {
-                    tap_code(KC_MS_L);
+                    tap_code(KC_PGDN);
                 }
                 break;
 
@@ -136,10 +121,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 // OLED STUFF STARTS HERE
 // based on https://github.com/qmk/qmk_firmware/blob/master/keyboards/kyria/keymaps/j-inc/keymap.c
-
-// In your rules.mk make sure you have:
-// OLED_DRIVER_ENABLE = yes
-// WPM_ENABLE = yes
 
 #ifdef OLED_DRIVER_ENABLE
 // WPM-responsive animation stuff here
