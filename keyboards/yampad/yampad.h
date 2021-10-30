@@ -28,7 +28,7 @@
  * represents the switch matrix.
  */
 
-/* COSPAD numpad matrix layout
+/* YAMPAD numpad matrix layout
    *     ,-------------------.
    *     | 00 | 01 | 02 | 03 |
    *     |----|----|----|----|
