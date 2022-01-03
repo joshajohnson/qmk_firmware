@@ -119,7 +119,7 @@ Enc 1: Saturation
 Enc 2: Brightness
 Enc 3: LED Mode / enable
 */
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (IS_LAYER_ON(_FN)){
         if (index == 0) {
             if (clockwise) {
@@ -188,6 +188,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             // }
         }
     }
+    return true;
 }
 
 /*
