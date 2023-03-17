@@ -1,11 +1,11 @@
 {
-    "keyboard_name": "Dan 60",
-    "manufacturer": "mrBOdyMassage",
+    "keyboard_name": "Lambda",
+    "manufacturer": "Eden Foundry",
     "url": "https://github.com/kkatano/bakeneko-60-pcb",
     "maintainer": "kkatano",
     "usb": {
-        "vid": "0x6A6A",
-        "pid": "0xB0DD",
+        "vid": "0xEDFD",
+        "pid": "0x4C44",
         "device_version": "0.0.1"
     },
     "layouts": {
